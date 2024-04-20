@@ -1,0 +1,5 @@
+library('tidyverse')
+data <- read.csv('project-10.csv')
+attach(data)
+
+data %>% distinct(Club)

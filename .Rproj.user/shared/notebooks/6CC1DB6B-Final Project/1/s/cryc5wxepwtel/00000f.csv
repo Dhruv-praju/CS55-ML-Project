@@ -1,0 +1,5 @@
+"0","# get top 20 clubs by highest mean wage"
+"0","data %>% group_by(Club) %>% summarise(Mean_Wage = mean(Wage_in_K)) %>% arrange(desc(Mean_Wage)) %>% select(Club) %>% head(20) -> top.clubs"
+"0",""
+"0","data %>% filter(Club %in% top.clubs$Club) -> top.clubs.data"
+"0",""

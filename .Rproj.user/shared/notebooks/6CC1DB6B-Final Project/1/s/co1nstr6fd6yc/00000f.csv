@@ -1,0 +1,5 @@
+"0","library(emmeans)"
+"0","m <- lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Club, data=data)"
+"0","emmeans.result <- emmeans(m, specs = ""Club"" , contr = ""pairwise"",  adjust=""tukey"")$contrast"
+"0","emmeans.data <- as.data.frame(emmeans.result)"
+"0","emmeans.data %>% filter(p.value<0.05) %>% view()"

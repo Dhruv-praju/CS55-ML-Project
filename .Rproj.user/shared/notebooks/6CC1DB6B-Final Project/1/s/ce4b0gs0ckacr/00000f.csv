@@ -1,0 +1,2 @@
+"0","data <- read.csv('https://raw.githubusercontent.com/kiat/R-Examples/master/projects/datasets/project-10.csv')"
+"0","data"

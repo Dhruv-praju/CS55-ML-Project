@@ -1,0 +1,1 @@
+"0","plot(Wage_in_K, residuals(mlr.m2))"

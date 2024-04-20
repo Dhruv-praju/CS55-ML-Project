@@ -1,0 +1,8 @@
+"0","# tukeys pair wise t-test"
+"0","tukey_result <- TukeyHSD(m)"
+"0","# convert to dataframe"
+"0","comparisons <- as.data.frame(tukey_result$Club)"
+"0","# filter pairs whose p-value<0.05"
+"0","comparisons %>% filter(comparisons$`p adj`<0.05) %>% select('p adj') -> diff.groups"
+"0",""
+"0","diff.groups"

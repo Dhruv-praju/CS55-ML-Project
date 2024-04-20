@@ -1,0 +1,1 @@
+"0","plot(Value_in_M, residuals(m), xlab = 'Value of the player (X)', ylab = 'Residual')"

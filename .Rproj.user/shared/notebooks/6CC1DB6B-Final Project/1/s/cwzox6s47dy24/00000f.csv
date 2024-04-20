@@ -1,0 +1,4 @@
+"0","# SLR"
+"0","m <- lm(Wage_in_K ~ Value_in_M)"
+"0","# plot SLR"
+"0","plot( Value_in_M, Wage_in_K, xlab = 'Value', ylab = 'Wage', main = 'SLR between wage and value of player')"
