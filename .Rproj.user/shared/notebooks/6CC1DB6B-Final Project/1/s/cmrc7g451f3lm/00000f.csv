@@ -1,5 +1,4 @@
-"0","Anova(lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Club, data=data), type=3)
-"
+"0","Anova(lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Club, data=data), type=3)"
 "2","Warning: one or more coefficients in the hypothesis include
      arithmetic operators in their names;
   the printed representation of the hypothesis will be omitted"

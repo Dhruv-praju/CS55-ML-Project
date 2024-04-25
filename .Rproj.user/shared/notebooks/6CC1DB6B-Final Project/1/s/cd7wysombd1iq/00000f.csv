@@ -1,4 +1,0 @@
-"0","mlr.final = lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Potential+Age+Club, data=data)"
-"0","plot(mlr.final)"
-"2","Warning: not plotting observations with leverage one:
-  77, 110, 148, 190, 207, 209, 223, 257, 271, 277, 280, 294, 316, 331, 332, 360, 390, 398, 404, 405, 432, 440, 448, 456, 459, 461, 466, 467"

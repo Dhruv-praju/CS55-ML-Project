@@ -1,1 +1,0 @@
-"0","plot(Wage_in_K, residuals(m), xlab = 'Wage of the player(Y)', ylab = 'Residual')"

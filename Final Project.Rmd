@@ -1,12 +1,14 @@
 ---
 title: "CS555 R Final Project Notebook"
 output:
-  html_document:
-    df_print: paged
-  pdf_document:
-    latex_engine: xelatex
   html_notebook:
     toc: true 
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+editor_options: 
+  chunk_output_type: inline
 ---
 ```{r}
 library('tidyverse')
@@ -117,6 +119,8 @@ plot( Value_in_M, Wage_in_K, xlab = 'Value', ylab = 'Wage', main = 'SLR between 
 abline(m, col='red')
 # SLR summary
 summary(m)
+mse <- mean(residuals(m)^2)
+print(mse)
 # CI of coefficients
 upper.c1 <- coef(m)[1]+qt(0.95,500-2)*4.3343
 lower.c1 <- coef(m)[1]-qt(0.95,500-2)*4.3343
@@ -241,16 +245,18 @@ ggplot(cor_matrix_melted, aes(Var1, Var2, fill = value, label = round(value, 2))
 
 ```{r}
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Height_in_Inches+Weight_in_lbs+Reactions, data = data)
+mean(residuals(mlr.m2)^2)
 
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Height_in_Inches+Reactions, data = data)
-
+mean(residuals(mlr.m2)^2)
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Reactions, data = data)
-
+mean(residuals(mlr.m2)^2)
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age, data = data)
-
+mean(residuals(mlr.m2)^2)
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Age, data = data)
-
+mean(residuals(mlr.m2)^2)
 mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength, data = data)
+mean(residuals(mlr.m2)^2)
 summary(mlr.m2)
 
 ```
@@ -359,8 +365,11 @@ emmeans.data %>% filter(p.value<0.05) %>% view()
 
 ```{r}
 m <- lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Club, data=data) #R2=0.875
+mean(residuals(m)^2)
 m <- lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Potential+Club, data=data) #R2=0.905
+mean(residuals(m)^2)
 m <- lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Potential+Age+Club, data=data) #R2=0.909
+mean(residuals(m)^2)
 summary(m)
 ```
 
@@ -393,6 +402,59 @@ Model is **not** significant as p-value of *nationality* > 0.05. We have signifi
 ```{r}
 mlr.final = lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Potential+Age+Club, data=data)
 plot(mlr.final)
+plot(Wage_in_K ,residuals(mlr.final))
+```
+
+For extremely high wages ( >400K ), the residual error is very large. Hence could be possible outliers.
+
+### Outlier Removal
+```{r}
+data %>% filter(Wage_in_K>400) %>% view()
+data %>% ggplot(aes(x = Wage_in_K)) +
+  geom_histogram(color = 'black') +
+  geom_vline(xintercept = median(Wage_in_K), colour = 'red', show.legend = TRUE) +
+  geom_vline(xintercept = mean(Wage_in_K), colour = 'blue', show.legend = TRUE) +
+  labs(x = 'Wage (in K)', y = 'Frequency', title = 'Histogram of Wage Distribution')
+```
+Right skewed distribution
+Most soccer players have below median wage and very few players have significantly large wage.
+
+
+```{r}
+Q1 <- quantile(Wage_in_K, 0.25)
+Q3 <- quantile(Wage_in_K, 0.75)
+IQR <- Q3 - Q1
+
+Med <- median(Wage_in_K)
+
+filtered.data<-data[!(Wage_in_K>(Q3+1.5*IQR)|Wage_in_K<(Q1-1.5*IQR)),]
+
+m <- lm(Wage_in_K ~ Overall+Value_in_M+Balance+Strength+Potential+Club, data=filtered.data)
+summary(m)
+plot(m)
+plot(filtered.data$Wage_in_K,residuals(m))
+```
+
+
+## 3.3 Logistic Regression
+```{r}
+view(data)
+data %>% group_by(Club) %>% summarise(Mean_wage = median(Wage_in_K)) %>% view()
+data %>% group_by(Club) %>% summarise(Mean_wage = mean(Wage_in_K))  -> tmp
+
+tmp %>% ggplot(aes(x=Mean_wage))+
+  geom_histogram(binwidth = 10,fill = "skyblue", color = "black")+
+  geom_vline(xintercept = mean(tmp$Mean_wage), color='red')+
+  labs(title = 'Distribution of Mean wages of clubs', x='Club Mean wage')
+```
+Right Skewed distribution
+Most of the clubs have very low wages, while very few clubs have significantly high wages 
+
+```{r}
+data$High_Wage <- ifelse(Wage_in_K > mean(tmp$Mean_wage), 1, 0)
+attach(data)
+m <- glm(High_Wage ~ Value_in_M, family = binomial)
+summary(m)
 ```
 
 ## Conclusion

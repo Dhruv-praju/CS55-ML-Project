@@ -1,15 +1,5 @@
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Height_in_Inches+Weight_in_lbs+Reactions, data = data)"
-"0",""
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Height_in_Inches+Reactions, data = data)"
-"0",""
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age+Reactions, data = data)"
-"0",""
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Potential+Age, data = data)"
-"0",""
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength+Age, data = data)"
-"0",""
-"0","mlr.m2 <- lm(Wage_in_K ~ Value_in_M+Overall+Balance+Strength, data = data)"
-"0","summary(mlr.m2)"
+"0","summary(mlr.m2)
+"
 "1","
 Call:
 "
